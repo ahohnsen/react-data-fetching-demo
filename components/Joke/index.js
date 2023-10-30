@@ -4,7 +4,7 @@ import useSWR from "swr";
 export default function Joke() {
   const [id, setId] = useState(0);
 
-  const { data } = useSWR(
+  const { data, error, isLoading } = useSWR(
     `https://example-apis.vercel.app/api/bad-jokes/${id}`
   );
 
@@ -36,7 +36,13 @@ export default function Joke() {
     });
   }
 
-  if (!data) {
+  if (error) {
+    return (
+      <h1>There was an error loading the data. Please try again later.</h1>
+    );
+  }
+
+  if (isLoading) {
     return <h1>Loading...</h1>;
   }
 
